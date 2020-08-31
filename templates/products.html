@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Management</title>
+
+<!--Fonts-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+
+</head>
+<body>
+	{% if user.is_superuser %}
+	<nav class="navbar navbar-expand-lg navbar-dark" style="position: fixed; width: 100%; z-index: 1;">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fas fa-code fa-1x pb-2 icon2-color"></i>
+            </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-lg-auto">
+                <li class="nav-item active">
+                    <a class="nav-link navigation-link" href="{% url 'home' %}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+	</nav>
+
+	<section id="home" style="padding-top: 10em; padding-bottom: 5em;">
+	<div class="container">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-xs-6">
+							<h2>Manage <b>Products</b></h2>
+						</div>
+					</div>
+				</div>
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+							<th>Category</th>
+							<th>Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+						<tr>
+							<td>#{{ product.p_id }}</td>
+							<td>{{ product.product_name }} </td>
+							<td>{{ product.category }}</td>
+							<td>{{ product.price }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="clearfix">
+					<div class="hint-text">Total products are <b>{{ count }}</b>.</div>
+				</div>
+				<div class="float-right"><a href="{% url 'addproduct' %}">
+						<button type="button" class="btn btn-success">Add Product</button></a>
+						<a href="{% url 'addproduct' %}"><button type="button" class="btn btn-info">Edit Product</button></a>
+						<a href="{% url 'addproduct' %}"><button type="button" class="btn btn-danger">Delete Product</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	{% else %}
+	<div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="box">
+                        <h1>You have nothing to see here!</h1>
+                        <div class="col-md-12">
+                            <ul class="social-network social-circle">
+                                <li><a href="#" class="icoGithub" title="Github"><i class="fab fa-github"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	{% endif %}
+</body>
+</html>

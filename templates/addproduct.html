@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products</title>
+
+<!--Fonts-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+
+</head>
+<body>
+	{% if user.is_superuser %}
+	<nav class="navbar navbar-expand-lg navbar-dark" style="position: fixed; width: 100%; z-index: 1;">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fas fa-code fa-1x pb-2 icon2-color"></i>
+            </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-lg-auto">
+                <li class="nav-item active">
+                    <a class="nav-link navigation-link" href="#">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+	</nav>
+	{% endif %}
+	
+	{% if user.is_superuser %}
+	<section id="home" style="padding-top: 10em; padding-bottom: 5em;">
+        <div class="container">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" action="/products/addproduct/">
+                    {% csrf_token %}
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add a new product</h4>
+                        </div> 
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="pid">Product ID</label>
+                                {{ form.p_id }}
+                            </div>
+                                <!-- <input type="text" name="pid" class="form-control" required> -->
+                            </div>
+                            <div class="form-group">
+                                <label for="product_name">Product name</label>
+                                {{ form.product_name }}
+                            </div>
+                            <div class="form-group">
+                                <label for="product_name">Category</label>
+                                {{ form.category }}
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                {{ form.price }}
+                            </div>
+                            <a href="{% url 'users' %}"><input type="button" class="btn btn-default" value="Cancel"></a>
+                            <button type="submit" class="btn btn-primary">Submit</button> 
+                        </div>
+                    </form>
+                </div>     
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="box">   
+                    <h1>You have nothing to see here!</h1>
+                    <div class="col-md-12">
+                        <ul class="social-network social-circle">
+                            <li><a href="#" class="icoGithub" title="Github"><i class="fab fa-github"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+</body>
+</html>
